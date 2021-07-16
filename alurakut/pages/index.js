@@ -21,7 +21,7 @@ function ProfileSidebar(properties){
 
 export default function Home() {
   const githubUser = 'pedroberbel';
-  const pessoasFavoritas = ['pedroberbel','pedro','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
+  const pessoasFavoritas = ['pedroberbel','pedro','berbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
   const [comunidades, setComunidades] = React.useState([{
     id: '23423443',
     title: 'Eu odeio acordar cedo',
@@ -62,7 +62,9 @@ export default function Home() {
                 image: dadosDoForm.get('image'),
               }
               const comunidadesAtualizadas = [...comunidades, comunidade];
-              setComunidades(comunidadesAtualizadas);
+              if (comunidade.title && comunidade.image){
+                setComunidades(comunidadesAtualizadas);
+              }
             }}>
               <div>
                 <input 
