@@ -21,7 +21,7 @@ function ProfileSidebar(properties){
 
 export default function Home() {
   const githubUser = 'pedroberbel';
-  const pessoasFavoritas = ['pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
+  const pessoasFavoritas = ['pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
   const [comunidades, setComunidades] = React.useState([{
     id: '23423443',
     title: 'Eu odeio acordar cedo',
@@ -29,6 +29,7 @@ export default function Home() {
   }]);
   //const comunidades = comunidades[0]; posição com o valor 
   //const alteradorComunidades = comunidades[1]; posição com oque altera o array
+  const limit = 6;
   return (
     <div>
       <AlurakutMenu />
@@ -89,7 +90,7 @@ export default function Home() {
             Amigos  ({pessoasFavoritas.length})
             </h2>
             <ul>
-              {pessoasFavoritas.map((itemAtual) => {
+              {pessoasFavoritas.slice(0, limit).map((itemAtual) => { // pessoasFavoritas.map((itemAtual) => {
                 return (
                   <li key={itemAtual}>
                     <a href={`/users/${itemAtual}`}>
@@ -107,7 +108,7 @@ export default function Home() {
             Comunidades  ({comunidades.length})
             </h2>
             <ul>
-              {comunidades.map((itemAtual) => {
+              {comunidades.slice(0,limit).map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
                     <a href={`/users/${itemAtual.title}`}>

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Box from '../Box';
 
 export const ProfileRelationsBoxWrapper = styled(Box)`
+
   ul {
     display: grid;
     grid-gap: 8px;
@@ -11,7 +12,7 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
   }
   img {
     object-fit: cover;
-    background-position: center center;
+    background-position: center center; 
     width: 100%;
     height: 100%;
     position: relative;
@@ -49,4 +50,4 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
       background-image: linear-gradient(0deg,#00000073,transparent);
     }
   }
-`;
+ `;
