@@ -1,12 +1,19 @@
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
-import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
+import { AlurakutMenu, OrkutNostalgicIconSet, AlurakutProfileSidebarMenuDefault } from '../src/lib/AlurakutCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
 function ProfileSidebar(properties){
   return (
     <Box>
       <img src={`https://github.com/${properties.githubUser}.png`} style={{borderRadius:'8px'}}></img>
+      {/* <img src={`https://www.linkedin.com/in/${properties.githubUser}/detail/photo/`} style={{borderRadius:'8px'}}></img> */}
+      <hr />
+      <p>
+        <a className="boxLink" href={`https://github.com/${properties.githubUser}`}>@{properties.githubUser}</a>
+      </p>
+      <hr />
+      <AlurakutProfileSidebarMenuDefault />
     </Box>
   )
 }
