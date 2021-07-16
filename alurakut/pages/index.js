@@ -19,6 +19,29 @@ function ProfileSidebar(properties){
   )
 }
 
+function ProfileRelationsBox(properties){
+  return (
+  <ProfileRelationsBoxWrapper>
+  <h2 className="smallTitle">
+  {properties.title}  ({properties.items.length})
+  </h2>
+  <ul>
+    {properties.items.slice(0,6).map((itemAtual)=>{
+      return (
+        <li key={itemAtual.login}>
+        <a href={`https://github.com/${itemAtual.login}`}>
+          <img src={`https://github.com/${itemAtual.login}.png`} />
+          <span>{itemAtual.login}</span>
+        </a>
+      </li>
+        )
+    })}
+  </ul>
+
+</ProfileRelationsBoxWrapper>
+  )
+}
+
 export default function Home() {
   const githubUser = 'pedroberbel';
   const pessoasFavoritas = ['pedroberbel','pedro','berbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
@@ -27,6 +50,20 @@ export default function Home() {
     title: 'Eu odeio acordar cedo',
     image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }]);
+
+  const [seguidores, setSeguidores] = React.useState([]);
+
+  React.useEffect(()=>{
+    fetch(`https://api.github.com/users/${githubUser}/followers`)
+                      .then((githubResponse) => {
+                        return githubResponse.json();
+                      })
+                      .then((completeResponse) => {
+                        setSeguidores(completeResponse)
+                      })
+  }, []) //segundo parâmetro - um array vazio, pois queremos que ele rode apenas 1 vez.
+
+
   //const comunidades = comunidades[0]; posição com o valor 
   //const alteradorComunidades = comunidades[1]; posição com oque altera o array
   const limit = 6;
@@ -125,6 +162,9 @@ export default function Home() {
             </ul>
 
           </ProfileRelationsBoxWrapper>
+          <ProfileRelationsBox title="Seguidores" items={seguidores}/>
+
+
         </div>
         
         
