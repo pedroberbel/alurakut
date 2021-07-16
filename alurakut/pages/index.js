@@ -21,7 +21,7 @@ function ProfileSidebar(properties){
 
 export default function Home() {
   const githubUser = 'pedroberbel';
-  const pessoasFavoritas = ['pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
+  const pessoasFavoritas = ['pedroberbel','pedro','pedroberbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
   const [comunidades, setComunidades] = React.useState([{
     id: '23423443',
     title: 'Eu odeio acordar cedo',
@@ -92,12 +92,14 @@ export default function Home() {
             <ul>
               {pessoasFavoritas.slice(0, limit).map((itemAtual) => { // pessoasFavoritas.map((itemAtual) => {
                 return (
+                  
                   <li key={itemAtual}>
-                    <a href={`/users/${itemAtual}`}>
+                    <a href={`https://github.com/${itemAtual}`}>
                       <img src={`https://github.com/${itemAtual}.png`} />
                       <span>{itemAtual}</span>
                     </a>
                   </li>
+                  
                 )
               })}
             </ul>
