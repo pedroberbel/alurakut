@@ -32,7 +32,7 @@ export default function Home() {
   const limit = 6;
   return (
     <div>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser={githubUser}/>
       <MainGrid>
         <div className="profileArea" style={{gridArea: 'profileArea'}}>
           <ProfileSidebar githubUser={githubUser}/>
