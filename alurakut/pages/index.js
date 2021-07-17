@@ -45,15 +45,17 @@ function ProfileRelationsBox(properties){
 export default function Home() {
   const githubUser = 'pedroberbel';
   const pessoasFavoritas = ['pedroberbel','pedro','berbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
-  const [comunidades, setComunidades] = React.useState([{
-    id: '23423443',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }]);
+  const [comunidades, setComunidades] = React.useState([]);
+  //   {
+  //   id: '23423443',
+  //   title: 'Eu odeio acordar cedo',
+  //   image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+  // }]);
 
   const [seguidores, setSeguidores] = React.useState([]);
 
   React.useEffect(()=>{
+    //array de dados de seguidores do github
     fetch(`https://api.github.com/users/${githubUser}/followers`)
                       .then((githubResponse) => {
                         return githubResponse.json();
@@ -61,6 +63,31 @@ export default function Home() {
                       .then((completeResponse) => {
                         setSeguidores(completeResponse)
                       })
+     //array de dados das comunidades do DatoCMS  
+     fetch('https://graphql.datocms.com/',{
+       method: 'POST', 
+       headers: {
+         'Authorization':'6669b4508e09695ffc25ed7f31ad20',
+         'Content-Type':'application/json',
+         'Accept':'application/json'        
+        },
+      body: JSON.stringify({"query":`
+      query {
+        allCommunities {
+          id
+          title
+          imageUrl
+          creatorSlug
+        }
+      }`
+    })}) //objeto de configuração, method padrão GET
+    .then((response)=> response.json())
+    .then((responseCompleto) => {
+      const comunidadesFromDato = responseCompleto.data.allCommunities;
+      setComunidades(comunidadesFromDato)
+      console.log(comunidadesFromDato)
+    })
+
   }, []) //segundo parâmetro - um array vazio, pois queremos que ele rode apenas 1 vez.
 
 
@@ -152,8 +179,8 @@ export default function Home() {
               {comunidades.slice(0,limit).map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
-                    <a href={`/users/${itemAtual.title}`}>
-                      <img src={itemAtual.image} />
+                    <a href={`/communities/${itemAtual.id}`}>
+                      <img src={itemAtual.imageUrl} />
                       <span>{itemAtual.title}</span>
                     </a>
                   </li>
@@ -162,7 +189,7 @@ export default function Home() {
             </ul>
 
           </ProfileRelationsBoxWrapper>
-          <ProfileRelationsBox title="Seguidores" items={seguidores}/>
+          <ProfileRelationsBox title="Seguidores Github" items={seguidores}/>
 
 
         </div>
