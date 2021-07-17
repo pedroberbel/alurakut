@@ -53,8 +53,19 @@ export default function Home() {
   // }]);
 
   const [seguidores, setSeguidores] = React.useState([]);
+  const [seguidos, setSeguidos] = React.useState([]);
 
   React.useEffect(()=>{
+    //array de pessoas que o usuário segue no github
+    fetch(`https://api.github.com/users/${githubUser}/following`)
+                      .then((githubResponseFollowing) => {
+                        return githubResponseFollowing.json();
+                      })
+                      .then((completeResponseFollowing) => {
+                        console.log(completeResponseFollowing)
+                        setSeguidos(completeResponseFollowing)
+                      })
+
     //array de dados de seguidores do github
     fetch(`https://api.github.com/users/${githubUser}/followers`)
                       .then((githubResponse) => {
@@ -189,8 +200,9 @@ export default function Home() {
             </ul>
 
           </ProfileRelationsBoxWrapper>
+          <ProfileRelationsBox title="Seguindo no Github" items={seguidos} />
           <ProfileRelationsBox title="Seguidores Github" items={seguidores}/>
-
+              
 
         </div>
         
