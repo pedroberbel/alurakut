@@ -3,6 +3,8 @@ import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet, AlurakutProfileSidebarMenuDefault } from '../src/lib/AlurakutCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 
 function ProfileSidebar(properties){
   return (
@@ -42,9 +44,10 @@ function ProfileRelationsBox(properties){
   )
 }
 
-export default function Home() {
-  const githubUser = 'pedroberbel';
-  const pessoasFavoritas = ['pedroberbel','pedro','berbel','pedroberbel','pedroberbel','pedroberbel','pedroberbel'];
+export default function Home(props) {
+  // const githubUser = 'pedroberbel';
+  const githubUser = props.githubUser;
+  const pessoasFavoritas = ['pedroberbel','omariosouto','peas','juunegreiros','billgates','elonmusk','pedroberbel'];
   const [comunidades, setComunidades] = React.useState([]);
   //   {
   //   id: '23423443',
@@ -172,6 +175,16 @@ export default function Home() {
               
             </form>
           </Box>
+          {/* <Box>
+          <h2 className="subTitle">Batalha dos Seguidores!</h2>
+          <p>Os seguidores são comparados atrvés de 3 itens:</p>
+          <p>Número de Seguidores - 1 ponto</p>
+          <p>Número de Repositórios - 1 ponto</p>
+          <p>Usuário mais Antigo - 1 ponto</p>
+
+          <p>É necessário ser um seguidor da conta: <a href={`https://github.com/pedroberbel`}>@pedroberbel</a></p>
+
+          </Box> */}
         </div>
 
         <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
@@ -224,4 +237,40 @@ export default function Home() {
       </MainGrid>
     </div>
   )
+}
+
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  const token = cookies.USER_TOKEN;
+  const { githubUser } = jwt.decode(token);
+
+  console.log(githubUser)
+
+  const { isAuthenticated } = await fetch('http://localhost:3000/api/auth', {
+    headers: {
+      Authorization: token
+    }
+  })
+  .then((resposta) => resposta.json())
+
+  console.log('isAuthenticated: ' + jwt.decode(token).githubUser + ' ' + isAuthenticated);
+
+  if (!isAuthenticated){
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
+
+  //JWT para decodificar o token recebido
+  //valor dentro da chave tem que ser o mesmo do recebido para ele reconhecer
+  
+  return {
+    props: {
+      githubUser
+    }
+  }
 }
