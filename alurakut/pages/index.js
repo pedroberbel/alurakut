@@ -5,6 +5,7 @@ import { AlurakutMenu, OrkutNostalgicIconSet, AlurakutProfileSidebarMenuDefault 
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 import nookies from 'nookies';
 import jwt from 'jsonwebtoken';
+import { MenuOpcoes } from '../src/components/MenuOpcoes';
 
 function ProfileSidebar(properties){
   return (
@@ -21,7 +22,7 @@ function ProfileSidebar(properties){
   )
 }
 
-function ProfileRelationsBox(properties){
+export function ProfileRelationsBox(properties){
   return (
   <ProfileRelationsBoxWrapper>
   <h2 className="smallTitle">
@@ -125,8 +126,9 @@ export default function Home(props) {
 
             <OrkutNostalgicIconSet />
           </Box>
+          <MenuOpcoes />
           <Box>
-            <h2 className="subTitle">O que você deseja fazer?</h2>
+            <h2 className="subTitle">Criar Comunidade</h2>
             <form onSubmit={function handleCriaComunidade(e) {
               e.preventDefault();
               const dadosDoForm = new FormData(e.target);
@@ -254,7 +256,7 @@ export async function getServerSideProps(context) {
   })
   .then((resposta) => resposta.json())
 
-  console.log('isAuthenticated: ' + jwt.decode(token).githubUser + ' ' + isAuthenticated);
+  //console.log('isAuthenticated: ' + jwt.decode(token).githubUser + ' ' + isAuthenticated);
 
   if (!isAuthenticated){
     return {

@@ -54,7 +54,7 @@ export default function LoginScreen() {
                 ? 'Preencha o campo'
                 : ''
             }
-            <button onClick={()=>{}} type="submit">
+            <button type="submit">
               Login
             </button>
           </form>
