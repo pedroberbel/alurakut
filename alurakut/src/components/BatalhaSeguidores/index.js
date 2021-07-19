@@ -73,26 +73,37 @@ export function BatalhaSeguidores(fighters){
                         }).then(()=>{
                             let p1Pts = 0;
                             let p2Pts = 0;
-                            if (player1.followers > player2.followers){
+                            if (player1.followers === player2.followers) {
+                                p1Pts += 1;
+                                p2Pts += 1;
+                            }
+                            else if (player1.followers > player2.followers){
                                 p1Pts += 1;
                             } else {
                                 p2Pts += 1;
                             }
                             
-                            if (player1.public_repos > player2.public_repos){
+                            if (player1.public_repos === player2.public_repos) {
+                                p1Pts += 1;
+                                p2Pts += 1;
+                            }
+                            else if (player1.public_repos > player2.public_repos){
                                 p1Pts += 1;
                             } else {
                                 p2Pts += 1;
                             }
-                        
-                            if (player1.following > player2.following){
+
+                            if (player1.following === player2.following) {
+                                p1Pts += 1;
+                                p2Pts += 1;
+                            }else if (player1.following > player2.following){
                                 p1Pts += 1;
                             } else {
                                 p2Pts += 1;
                             }
                     
                             
-                            (p1Pts > p2Pts)? setWinner(player1.login) : setWinner(player2.login);
+                            (p1Pts > p2Pts)? setWinner(player1.login) : (p1Pts === p2Pts) ? setWinner('empate') : setWinner(player2.login);
                         })
                         }}>
                         <ul>
@@ -159,7 +170,7 @@ export function BatalhaSeguidores(fighters){
                     <ul>
                         <p></p>
                     
-                    {(!winner) ? <p></p> :  <img src={`https://github.com/${winner}.png`} style={{maxHeight:'100px', maxWidth:'100px', borderRadius:'50px'}} />} 
+                    {(!winner) ? <p></p> : (winner==="empate")? <h3>Empatou!</h3>: <img src={`https://github.com/${winner}.png`} style={{maxHeight:'100px', maxWidth:'100px', borderRadius:'50px'}} />} 
                     </ul>
                     
                 </ProfileRelationsBoxWrapper>

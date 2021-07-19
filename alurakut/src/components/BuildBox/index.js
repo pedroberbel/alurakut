@@ -9,12 +9,13 @@ export function BuildBox(properties) {
 //    console.log('BuildBox: ', properties.valor)
 //    if(properties.valor === 'btncomunidade'){
 //    return <CriarComunidade />
-   if(properties.valor === 'btnbatalha') {
+console.log(properties.valor.githubUser)
+   if(properties.valor.box === 'btnbatalha') {
        return <BatalhaSeguidores />
-   } else if(properties.valor === 'btndepoimentos') {
+   } else if(properties.valor.box === 'btndepoimentos') {
         return <Depoimentos />
    } else {
-       return <CriarComunidade />;
+       return <CriarComunidade githubUser={properties.valor.githubUser}/>;
    }
    // return (<Box><p>{properties.valor}</p></Box>);
 }

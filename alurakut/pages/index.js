@@ -65,7 +65,7 @@ export default function Home(props) {
   const [seguidores, setSeguidores] = React.useState([]);
   const [seguidos, setSeguidos] = React.useState([]);
 
-  const [criaBox, setCriaBox] = React.useState('criacomunidade');
+  const [criaBox = {box:'',githubUser: githubUser}, setCriaBox] = React.useState('btncomunidade');
 
   React.useEffect(()=>{
     //array de pessoas que o usuário segue no github
@@ -137,21 +137,21 @@ export default function Home(props) {
             
             <h2 className="subTitle"> O que você deseja fazer?</h2>
             <ul>
-              <button onClick={function teste(){setCriaBox('btncomunidade')}} style={{width: '100%',
+              <button onClick={function teste(){setCriaBox({box:'btncomunidade',githubUser:githubUser})}} style={{width: '100%',
                                         display:'block',
                                         border: '0',
                                         padding: '12px',
                                         borderRadius: '8px',
                                         backgroundColor: '#2E7BB4',
                                         color: '#FFFFFF'}}>Criar Comunidade</button>
-              <button onClick={function teste(){setCriaBox('btnbatalha')}} style={{width: '100%',
+              <button onClick={function teste(){setCriaBox({box:'btnbatalha',githubUser:githubUser})}} style={{width: '100%',
                                         display:'block',
                                         border: '0',
                                         padding: '12px',
                                         borderRadius: '8px',
                                         backgroundColor: '#2E7BB4',
-                                        color: '#FFFFFF'}}>Batalha do Seguidores</button>
-              <button onClick={function teste(){setCriaBox('btndepoimentos')}} style={{width: '100%',
+                                        color: '#FFFFFF'}}>Batalha de Seguidores</button>
+              <button onClick={function teste(){setCriaBox({box:'btndepoimentos',githubUser:githubUser})}} style={{width: '100%',
                                         display:'block',
                                         border: '0',
                                         padding: '12px',
