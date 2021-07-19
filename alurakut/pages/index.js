@@ -6,6 +6,7 @@ import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 import nookies from 'nookies';
 import jwt from 'jsonwebtoken';
 import { BuildBox } from '../src/components/BuildBox';
+import { useRouter } from 'next/router';
 
 
 function ProfileSidebar(properties){
@@ -48,7 +49,11 @@ export function ProfileRelationsBox(properties){
 
 export default function Home(props) {
   // const githubUser = 'pedroberbel';
+  const router = useRouter();
   const githubUser = props.githubUser;
+  if (!githubUser){
+    router.push('/login')
+  }
   const pessoasFavoritas = ['pedroberbel','omariosouto','peas','juunegreiros','billgates','elonmusk','pedroberbel'];
   const [comunidades, setComunidades] = React.useState([]);
   //   {
@@ -204,21 +209,23 @@ export async function getServerSideProps(context) {
   const { githubUser } = jwt.decode(token);
 
   console.log(githubUser)
+  const tokenDecoded = jwt.decode(token);
+  
+  if (!tokenDecoded) {
+    return {props:{githubUser:0}}
+  }
 
-  const { isAuthenticated } = await fetch('http://localhost:3000/api/auth', {
-    headers: {
-      Authorization: token
-    }
-  })
-  .then((resposta) => resposta.json())
+  const response = await fetch(
+    `https://api.github.com/users/${tokenDecoded.githubUser}`
+  );
+  const data = await response.json();
 
-  //console.log('isAuthenticated: ' + jwt.decode(token).githubUser + ' ' + isAuthenticated);
-
-  if (!isAuthenticated){
+  if (data.message === "Not Found" || !data) {  
+    return {props:{githubUser:0}}
+  } else {
     return {
-      redirect: {
-        destination: '/login',
-        permanent: false
+      props: {
+        githubUser
       }
     }
   }
@@ -226,9 +233,9 @@ export async function getServerSideProps(context) {
   //JWT para decodificar o token recebido
   //valor dentro da chave tem que ser o mesmo do recebido para ele reconhecer
   
-  return {
-    props: {
-      githubUser
-    }
-  }
+  // return {
+  //   props: {
+  //     githubUser
+  //   }
+  // }
 }
