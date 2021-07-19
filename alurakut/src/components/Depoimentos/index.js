@@ -78,7 +78,13 @@ export function Depoimentos(){
                   name="text" 
                   aria-label="O que você tem a dizer?"   />
               </div>
-              <button>
+              <button style={{width: '100%',
+                                        display:'block',
+                                        border: '0',
+                                        padding: '12px',
+                                        borderRadius: '8px',
+                                        backgroundColor: '#2E7BB4',
+                                        color: '#FFFFFF'}}>
                 Criar Depoimento
               </button>
               </form>

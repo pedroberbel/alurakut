@@ -74,7 +74,6 @@ export default function Home(props) {
                         return githubResponseFollowing.json();
                       })
                       .then((completeResponseFollowing) => {
-                        console.log(completeResponseFollowing)
                         setSeguidos(completeResponseFollowing)
                       })
 
@@ -108,7 +107,6 @@ export default function Home(props) {
     .then((responseCompleto) => {
       const comunidadesFromDato = responseCompleto.data.allCommunities;
       setComunidades(comunidadesFromDato)
-      console.log(comunidadesFromDato)
     })
 
   }, []) //segundo parâmetro - um array vazio, pois queremos que ele rode apenas 1 vez.
@@ -139,9 +137,27 @@ export default function Home(props) {
             
             <h2 className="subTitle"> O que você deseja fazer?</h2>
             <ul>
-              <button onClick={function teste(){setCriaBox('btncomunidade')}}>Criar Comunidade</button>
-              <button onClick={function teste(){setCriaBox('btnbatalha')}}>Batalha do Seguidores</button>
-              <button onClick={function teste(){setCriaBox('btndepoimentos')}}>Criar Depoimento</button>
+              <button onClick={function teste(){setCriaBox('btncomunidade')}} style={{width: '100%',
+                                        display:'block',
+                                        border: '0',
+                                        padding: '12px',
+                                        borderRadius: '8px',
+                                        backgroundColor: '#2E7BB4',
+                                        color: '#FFFFFF'}}>Criar Comunidade</button>
+              <button onClick={function teste(){setCriaBox('btnbatalha')}} style={{width: '100%',
+                                        display:'block',
+                                        border: '0',
+                                        padding: '12px',
+                                        borderRadius: '8px',
+                                        backgroundColor: '#2E7BB4',
+                                        color: '#FFFFFF'}}>Batalha do Seguidores</button>
+              <button onClick={function teste(){setCriaBox('btndepoimentos')}} style={{width: '100%',
+                                        display:'block',
+                                        border: '0',
+                                        padding: '12px',
+                                        borderRadius: '8px',
+                                        backgroundColor: '#2E7BB4',
+                                        color: '#FFFFFF'}}>Criar Depoimento</button>
             </ul>
           </ProfileRelationsBoxWrapper>
 
@@ -208,7 +224,6 @@ export async function getServerSideProps(context) {
   const token = cookies.USER_TOKEN;
   const { githubUser } = jwt.decode(token);
 
-  console.log(githubUser)
   const tokenDecoded = jwt.decode(token);
   
   if (!tokenDecoded) {
