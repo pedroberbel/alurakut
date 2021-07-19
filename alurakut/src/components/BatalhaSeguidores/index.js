@@ -42,6 +42,8 @@ export function BatalhaSeguidores(fighters){
 
             return (<Box>
                 <h2 className="subTitle">Batalha de Seguidores</h2>
+                <p>Como Jogar: digite o usuário github nos campos dos players e clique em Fight para carregar os dados, clique em fight novamente para saber quem é o vendor</p>
+                <p>Clique em Nova Batalha, para começar a próxima!</p>
                 <ProfileRelationsBoxWrapper>
                     <button onClick={function resetBatalha(e){
                         e.preventDefault();
