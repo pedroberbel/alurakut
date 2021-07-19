@@ -5,11 +5,12 @@ import { AlurakutMenu, OrkutNostalgicIconSet, AlurakutProfileSidebarMenuDefault 
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 import nookies from 'nookies';
 import jwt from 'jsonwebtoken';
-import { MenuOpcoes } from '../src/components/MenuOpcoes';
+import { BuildBox } from '../src/components/BuildBox';
+
 
 function ProfileSidebar(properties){
   return (
-    <Box>
+    <Box> 
       <img src={`https://github.com/${properties.githubUser}.png`} style={{borderRadius:'8px'}}></img>
       {/* <img src={`https://www.linkedin.com/in/${properties.githubUser}/detail/photo/`} style={{borderRadius:'8px'}}></img> */}
       <hr />
@@ -26,7 +27,7 @@ export function ProfileRelationsBox(properties){
   return (
   <ProfileRelationsBoxWrapper>
   <h2 className="smallTitle">
-  {properties.title}  ({properties.items.length})
+  {properties.title}  ({properties.items.length}) {properties.items.length>6 ? <a href="/amigosgithub" style={{textDecoration:'none', color:'#2E7BB4' }}>Ver todos</a> : ''}
   </h2>
   <ul>
     {properties.items.slice(0,6).map((itemAtual)=>{
@@ -58,6 +59,8 @@ export default function Home(props) {
 
   const [seguidores, setSeguidores] = React.useState([]);
   const [seguidos, setSeguidos] = React.useState([]);
+
+  const [criaBox, setCriaBox] = React.useState('criacomunidade');
 
   React.useEffect(()=>{
     //array de pessoas que o usuário segue no github
@@ -126,73 +129,25 @@ export default function Home(props) {
 
             <OrkutNostalgicIconSet />
           </Box>
-          <MenuOpcoes />
-          <Box>
-            <h2 className="subTitle">Criar Comunidade</h2>
-            <form onSubmit={function handleCriaComunidade(e) {
-              e.preventDefault();
-              const dadosDoForm = new FormData(e.target);
-              // console.log(dadosDoForm.get('title'));
-              // console.log(dadosDoForm.get('image'));
+          {/* <MenuOpcoes /> */}
+          <ProfileRelationsBoxWrapper>
+            
+            <h2 className="subTitle"> O que você deseja fazer?</h2>
+            <ul>
+              <button onClick={function teste(){setCriaBox('btncomunidade')}}>Criar Comunidade</button>
+              <button onClick={function teste(){setCriaBox('btnbatalha')}}>Batalha do Seguidores</button>
+              <button onClick={function teste(){setCriaBox('btndepoimentos')}}>Criar Depoimento</button>
+            </ul>
+          </ProfileRelationsBoxWrapper>
 
-              //cria um objeto para passar à array
-              const comunidade = { 
-                title: dadosDoForm.get('title'),
-                imageUrl: dadosDoForm.get('image'),
-                creatorSlug: githubUser
-              }
+          <BuildBox valor={criaBox} />
 
-              fetch('/api/comunidades', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(comunidade)
-              })
-              .then(async (response)=> {
-                const dados = await response.json();
-                const comunidade = dados.registroCriado;
-                const comunidadesAtualizadas = [...comunidades, comunidade];
-                setComunidades(comunidadesAtualizadas);
-              })
-
-
-              
-            }}>
-              <div>
-                <input 
-                  placeholder="Qual vai ser o nome da sua comunidade?" 
-                  name="title" 
-                  aria-label="Qual vai ser o nome da sua comunidade?" />
-              </div>
-              <div>
-              <input 
-                placeholder="Coloque uma URL para usarmos de capa" 
-                name="image" 
-                aria-label="Coloque uma URL para usarmos de capa" />
-              </div>
-              <button>
-                Criar Comunidade
-              </button>
-              
-            </form>
-          </Box>
-          {/* <Box>
-          <h2 className="subTitle">Batalha dos Seguidores!</h2>
-          <p>Os seguidores são comparados atrvés de 3 itens:</p>
-          <p>Número de Seguidores - 1 ponto</p>
-          <p>Número de Repositórios - 1 ponto</p>
-          <p>Usuário mais Antigo - 1 ponto</p>
-
-          <p>É necessário ser um seguidor da conta: <a href={`https://github.com/pedroberbel`}>@pedroberbel</a></p>
-
-          </Box> */}
         </div>
 
         <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-            Amigos  ({pessoasFavoritas.length})
+            Amigos  ({pessoasFavoritas.length}) {pessoasFavoritas.length>6 ? <a href="/amigos" style={{textDecoration:'none', color:'#2E7BB4' }}>Ver todos</a> : ''}
             </h2>
             <ul>
               {pessoasFavoritas.slice(0, limit).map((itemAtual) => { // pessoasFavoritas.map((itemAtual) => {
@@ -207,12 +162,13 @@ export default function Home(props) {
                   
                 )
               })}
+              <p></p>
             </ul>
 
           </ProfileRelationsBoxWrapper>
           <ProfileRelationsBoxWrapper>
           <h2 className="smallTitle">
-            Comunidades  ({comunidades.length})
+            Comunidades  ({comunidades.length}) {comunidades.length>6 ? <a href="/comunidades" style={{textDecoration:'none', color:'#2E7BB4' }}>Ver todas</a> : ''}
             </h2>
             <ul>
               {comunidades.slice(0,limit).map((itemAtual) => {

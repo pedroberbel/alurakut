@@ -166,7 +166,7 @@ AlurakutMenu.Logo = styled.img`
   border-radius: 1000px;
   height: 34px;
 `;
-
+//MENU Para tela < 850
 function AlurakutMenuProfileSidebar({ githubUser }) {
   return (
     <div className="alurakutMenuProfileSidebar">
